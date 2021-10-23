@@ -12,6 +12,7 @@ SQLAlchemy = "^1.4.25"
 databases = "^0.5.3"
 uvicorn = "^0.15.0"
 python-dotenv = "^0.19.1"
+aiosqlite = "^0.17.0"
 
 [tool.poetry.dev-dependencies]
 
