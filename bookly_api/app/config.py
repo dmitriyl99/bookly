@@ -3,7 +3,11 @@ from typing import List, Union
 from pydantic import BaseSettings, AnyHttpUrl, validator
 from dotenv import load_dotenv
 
+import os
+
 load_dotenv()
+
+base_path = os.path.dirname(os.path.abspath(__file__))
 
 
 class Settings(BaseSettings):
