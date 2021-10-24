@@ -1,3 +1,3 @@
-from readers_repository import ReadersRepository
-from books_repository import BooksRepository
-from circulations_repository import CirculationsRepository
+from .readers_repository import ReadersRepository
+from .books_repository import BooksRepository
+from .circulations_repository import CirculationsRepository
