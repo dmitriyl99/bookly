@@ -94,10 +94,9 @@ def import_authors():
 
 if __name__ == '__main__':
     acceptable_args = ['circulations', 'books', 'readers', 'authors']
-    args = sys.argv
-    if not args:
-        args = acceptable_args
-    else:
+    args = acceptable_args
+    if len(sys.argv) > 1:
+        args = sys.argv
         for arg in args:
             if arg not in acceptable_args and arg != os.path.basename(__file__):
                 raise ValueError('Invalid argument: %s' % arg)
