@@ -12,12 +12,14 @@ router = APIRouter()
 
 
 @router.get('/recommendation')
-async def get_recommendation_for_reader(reader_id: Optional[int] = None,
-                                        books_repository: BooksRepository = Depends(get_books_repository),
-                                        rec_service: RecommendationSystem = Depends(get_recommendation_service)):
+async def get_recommendation_for_reader(books_repository: BooksRepository = Depends(get_books_repository),
+                                        rec_service: RecommendationSystem = Depends(get_recommendation_service),
+                                        reader_id: Optional[int] = None):
     """
     Get recommendations for reader
     """
+    if reader_id == 0:
+        reader_id = None
     recommendations, history = rec_service.get_recommendations_for_reader(reader_id=reader_id)
     recommendations_response = []
     history_response = []

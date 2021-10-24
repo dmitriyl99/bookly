@@ -5,7 +5,7 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from app.data.database import SessionLocal
-from app.data.repositories import BooksRepository, CirculationsRepository, ReadersRepository
+from app.data.repositories import BooksRepository, CirculationsRepository, ReadersRepository, RecommendationsRepository
 from app.core.recommendation import RecommendationSystem
 
 
@@ -29,9 +29,14 @@ def get_circulations_repository(db: Session = Depends(get_db)) -> CirculationsRe
     return CirculationsRepository(db)
 
 
+def get_recommendations_repository(db: Session = Depends(get_db)) -> RecommendationsRepository:
+    return RecommendationsRepository(db)
+
+
 def get_recommendation_service(readers_repository: ReadersRepository = Depends(get_readers_repository),
-                               books_repository: BooksRepository = Depends(get_books_repository),
-                               circulations_repository: CirculationsRepository = Depends(get_circulations_repository)):
+                               circulations_repository: CirculationsRepository = Depends(get_circulations_repository),
+                               recommendations_repository: RecommendationsRepository = Depends(get_recommendations_repository)):
+
     return RecommendationSystem(readers=readers_repository,
-                                books=books_repository,
-                                circulations=circulations_repository)
+                                circulations=circulations_repository,
+                                recommendations=recommendations_repository)

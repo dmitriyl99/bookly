@@ -30,8 +30,7 @@ readers = sa.Table(
     'readers',
     metadata,
     sa.Column('id', sa.Integer, primary_key=True),
-    sa.Column('date_of_birth', sa.Date, nullable=True),
-    sa.Column('address', sa.String, nullable=True)
+    sa.Column('date_of_birth', sa.Date, nullable=True)
 )
 
 authors = sa.Table(
@@ -39,4 +38,11 @@ authors = sa.Table(
     metadata,
     sa.Column('id', sa.Integer, primary_key=True),
     sa.Column('name', sa.String)
+)
+
+recommendations = sa.Table(
+    'recommendations',
+    metadata,
+    sa.Column('reader_id', sa.Integer, nullable=True),
+    sa.Column('book_id', sa.Integer),
 )
