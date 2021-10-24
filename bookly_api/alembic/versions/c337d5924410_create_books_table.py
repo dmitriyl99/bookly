@@ -20,6 +20,7 @@ def upgrade():
     op.create_table(
         'books',
         sa.Column('id', sa.Integer, primary_key=True),
+        sa.Column('title', sa.String, nullable=True),
         sa.Column('author_id', sa.Integer, nullable=True),
         sa.Column('rubric_id', sa.Integer, nullable=True),
         sa.Column('language_id', sa.Integer, nullable=True),

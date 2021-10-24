@@ -7,6 +7,7 @@ books = sa.Table(
     'books',
     metadata,
     sa.Column('id', sa.Integer, primary_key=True),
+    sa.Column('title', sa.String, nullable=True),
     sa.Column('author_id', sa.Integer, nullable=True),
     sa.Column('rubric_id', sa.Integer, nullable=True),
     sa.Column('language_id', sa.Integer, nullable=True),
@@ -31,4 +32,11 @@ readers = sa.Table(
     sa.Column('id', sa.Integer, primary_key=True),
     sa.Column('date_of_birth', sa.Date, nullable=True),
     sa.Column('address', sa.String, nullable=True)
+)
+
+authors = sa.Table(
+    'authors',
+    metadata,
+    sa.Column('id', sa.Integer, primary_key=True),
+    sa.Column('name', sa.String)
 )
