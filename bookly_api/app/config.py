@@ -7,7 +7,7 @@ import os
 
 load_dotenv()
 
-base_path = os.path.dirname(os.path.abspath(__file__))
+base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 class Settings(BaseSettings):
