@@ -20,8 +20,7 @@ def upgrade():
     op.create_table(
         'readers',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('date_of_birth', sa.Date, nullable=True),
-        sa.Column('address', sa.String, nullable=True)
+        sa.Column('date_of_birth', sa.Date, nullable=True)
     )
 
 
