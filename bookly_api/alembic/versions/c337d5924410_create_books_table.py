@@ -20,15 +20,14 @@ def upgrade():
     op.create_table(
         'books',
         sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('author_id', sa.Integer),
-        sa.Column('rubric_id', sa.Integer),
-        sa.Column('rubric_parent_id', sa.Integer),
-        sa.Column('language_id', sa.Integer),
-        sa.Column('material_id', sa.Integer),
-        sa.Column('person_id', sa.Integer),
-        sa.Column('serial_id', sa.Integer),
+        sa.Column('author_id', sa.Integer, nullable=True),
+        sa.Column('rubric_id', sa.Integer, nullable=True),
+        sa.Column('language_id', sa.Integer, nullable=True),
+        sa.Column('material_id', sa.Integer, nullable=True),
+        sa.Column('person_id', sa.Integer, nullable=True),
+        sa.Column('serial_id', sa.Integer, nullable=True),
         sa.Column('smart_collapse_field', sa.String, nullable=True),
-        sa.Column('publication_type', sa.String),
+        sa.Column('publication_type', sa.String, nullable=True),
     )
 
 
