@@ -28,33 +28,32 @@ import os
 
 def import_circulations():
     print('Loading circulations...')
-    filepath = 'data/circulations.csv'
-    if not os.path.exists(filepath):
-        print('Circulation data not found')
-        return
-    df_circulations = pd.read_csv(filepath)
-    df_circulations.drop(['Unnamed: 0'], axis=1, inplace=True)
-    df_circulations.set_index('circulation_id', inplace=True)
-    df_circulations = df_circulations[['reader_id', 'book_id']]
-    print('Write circulations into database...')
-    with engine.begin() as connection:
-        df_circulations.to_sql('circulations', connection,
-                               if_exists='append', index_label='id', chunksize=100)
+    for i in range(1, 17):
+        filepath = f'data/circulaton_{i}.csv'
+        if not os.path.exists(filepath):
+            print('Circulation data not found')
+            return
+        df_circulations = pd.read_csv(filepath)
+        df_circulations.set_index('id', inplace=True)
+        print('Write circulations into database...')
+        with engine.begin() as connection:
+            df_circulations.to_sql('circulations', connection,
+                                   if_exists='append', index_label='id', chunksize=100)
     print('Done')
 
 
 def import_books():
     print('Loading books...')
-    filepath = 'data/books_alt.csv'
+    filepath = 'data/books.csv'
     if not os.path.exists(filepath):
         print('Books data not found')
         return
     df_books = pd.read_csv(filepath)
     df_books.set_index('id', inplace=True)
-    df_books = df_books[['person', 'publicationType', 'language_id',
-                         'material_id', 'rubric_id', 'author_id', 'serial_id']]
+    df_books.drop(['Unnamed: 0'], axis=1, inplace=True)
+    df_books.rename(columns={'person': 'person_id'}, inplace=True)
+    df_books.rename(columns={'publicationType': 'publication_type'}, inplace=True)
     print('Import books into database...')
-    df_books['person'] = df_books['person'].astype(object)
     with engine.begin() as connection:
         df_books.to_sql('books', connection, if_exists='append', index_label='id', chunksize=100)
     print('Done')
@@ -77,8 +76,24 @@ def import_readers():
     print('Done')
 
 
+def import_authors():
+    print('Loading authors...')
+    filepath = 'data/authors.csv'
+    if not os.path.exists(filepath):
+        print('Authors data not found')
+        return
+    df_authors = pd.read_csv(filepath)
+    df_authors.drop(['Unnamed: 0'], axis=1, inplace=True)
+    df_authors.set_index('id', inplace=True)
+    df_authors = df_authors.rename(columns={'author': 'name'})
+    print('Import authors into database...')
+    with engine.begin() as connection:
+        df_authors.to_sql('authors', connection, if_exists='append', index_label='id')
+    print('Done')
+
+
 if __name__ == '__main__':
-    acceptable_args = ['circulations', 'books', 'readers']
+    acceptable_args = ['circulations', 'books', 'readers', 'authors']
     args = sys.argv
     if not args:
         args = acceptable_args
@@ -92,4 +107,6 @@ if __name__ == '__main__':
         import_books()
     if 'circulations' in args:
         import_circulations()
+    if 'authors' in args:
+        import_authors()
 
